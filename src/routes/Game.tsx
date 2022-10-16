@@ -1,5 +1,7 @@
+import Board from '../components/game/Board'
+
 function Game() {
-	return <div>asdfjsa</div>
+	return <Board></Board>
 }
 
 export default Game
