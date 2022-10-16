@@ -1,12 +1,15 @@
-import {createEffect, createSignal, For} from "solid-js";
+import {createEffect, createSignal, For, onMount} from "solid-js";
 import {invoke} from '@tauri-apps/api/tauri'
 import Tile from "./Tile";
 import './Board.css'
+import Pieces from "./Pieces";
 
-function getColor(index: number): 'black' | 'white' {
+type Color = 'black' | 'white'
+
+function getColor(index: number): Color {
 	const row = Math.floor(index / 8)
 
-	let rowStartColor: 'black' | 'white' = row % 2 ? 'white' : 'black'
+	let rowStartColor: Color = row % 2 ? 'white' : 'black'
 
 	if (index % 2) {
 		rowStartColor = rowStartColor === 'white' ? 'black' : 'white'
@@ -16,16 +19,18 @@ function getColor(index: number): 'black' | 'white' {
 }
 
 const [position, setPosition] = createSignal('')
-
-createEffect(async () => {
-	setPosition(await invoke("greet"))
-}, [position])
+onMount(async () => {
+		setPosition(await invoke("greet"))
+		console.log("Updating position")
+	})
 
 function Board() {
 	return (<div class="board">
 		<For each={Array(64).fill("1")}>{(_, i) =>
 			<Tile number={i()} color={getColor(i())} />}
 		</For>
+		<Pieces fen={position()} ></Pieces>
+		<h1>{position()}</h1>
 	</div>)
 }
 
