@@ -1,5 +1,5 @@
 .piece {
 position: absolute;
-width: 12.5vh;}
+width: 12.5vh; height: 12.5vh;}
 
-.piece img {width: 100%;}
+.piece img {width: 100%; }
