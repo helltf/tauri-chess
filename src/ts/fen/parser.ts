@@ -1,9 +1,9 @@
 
-interface Piece {
+export interface Piece {
 	type: string
 	color: 'white' | 'black'
 }
-type PieceRow = (Piece | null)[]
+export type PieceRow = (Piece | null)[]
 export type Pieces = PieceRow[]
 
 const pieceEncodings: {[key: string]: string} = {
@@ -11,7 +11,8 @@ const pieceEncodings: {[key: string]: string} = {
 	r: 'Rook',
 	q: 'Queen',
 	n: 'Knight',
-	p: 'Pawn'
+	p: 'Pawn',
+	b: 'bishop'
 }
 
 const isLowerCase = (chars: string): boolean => {
@@ -22,7 +23,7 @@ const parseRow = (row: string): PieceRow => {
 	const chars = row.split('')
 
 	return chars.map(c => {
-		const mappedPiece = pieceEncodings[c]
+		const mappedPiece = pieceEncodings[c.toLowerCase()]
 
 		return mappedPiece ? {
 			type: mappedPiece,
