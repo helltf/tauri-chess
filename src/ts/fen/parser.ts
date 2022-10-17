@@ -8,11 +8,11 @@ export type PieceRow = (Piece | null)[]
 export type Pieces = PieceRow[]
 
 const pieceEncodings: {[key: string]: string} = {
-	k: 'King',
-	r: 'Rook',
-	q: 'Queen',
-	n: 'Knight',
-	p: 'Pawn',
+	k: 'king',
+	r: 'rook',
+	q: 'queen',
+	n: 'knight',
+	p: 'pawn',
 	b: 'bishop'
 }
 
