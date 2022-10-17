@@ -1,3 +1,4 @@
+import {off} from "process"
 
 export interface Piece {
 	type: string
@@ -22,14 +23,25 @@ const isLowerCase = (chars: string): boolean => {
 const parseRow = (row: string): PieceRow => {
 	const chars = row.split('')
 
-	return chars.map(c => {
+	return chars.reduce((pieces, c) => {
 		const mappedPiece = pieceEncodings[c.toLowerCase()]
 
-		return mappedPiece ? {
-			type: mappedPiece,
-			color: isLowerCase(c) ? 'white' : 'black'
-		} as Piece : null;
-	})
+		if (mappedPiece) {
+			pieces.push({
+				type: mappedPiece,
+				color: isLowerCase(c) ? 'black' : 'white'
+			})
+			return pieces
+		}
+
+		const offset = Number(c)
+
+		if (offset) {
+			pieces.push(...Array(offset).fill(null))
+		}
+
+		return pieces
+	}, [] as PieceRow)
 }
 
 const parsePosition = (position: string): Pieces => {
