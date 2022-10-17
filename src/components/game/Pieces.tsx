@@ -1,10 +1,19 @@
-import {parse} from '../../ts/fen/parser'
+import {parse, Pieces as PiecesType} from '../../ts/fen/parser'
 
-function Pieces(props: {fen: string}) {
-	const pieces = parse(props.fen)
-	console.log("Render pieces")
-	console.log(pieces)
-	return (<h1>{pieces.toString()}</h1>)
+import {createSignal, onMount} from "solid-js";
+import {invoke} from '@tauri-apps/api/tauri'
+function Pieces() {
+	const [pieces, setPieces] = createSignal([[]] as PiecesType)
+
+	onMount(async () => {
+		const position = await invoke<string>("greet")
+		setPieces(parse(position))
+		console.log(pieces())
+	})
+
+	return (<></>)
+
+
 }
 
 export default Pieces;

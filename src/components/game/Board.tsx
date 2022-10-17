@@ -30,7 +30,6 @@ function Board() {
 			<Tile number={i()} color={getColor(i())} />}
 		</For>
 		<Pieces fen={position()} ></Pieces>
-		<h1>{position()}</h1>
 	</div>)
 }
 

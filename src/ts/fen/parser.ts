@@ -4,7 +4,7 @@ interface Piece {
 	color: 'white' | 'black'
 }
 type PieceRow = (Piece | null)[]
-type Pieces = PieceRow[]
+export type Pieces = PieceRow[]
 
 const pieceEncodings: {[key: string]: string} = {
 	k: 'King',
