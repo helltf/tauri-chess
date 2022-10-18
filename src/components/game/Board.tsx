@@ -1,7 +1,9 @@
 import Tile from "./Tile";
 import './Board.css'
-import Pieces from "./Pieces";
-import {For} from 'solid-js'
+import {createSignal, For} from 'solid-js'
+import {parse, Piece, Pieces} from "../../ts/fen/parser";
+import {invoke} from '@tauri-apps/api/tauri'
+import {onMount} from 'solid-js'
 
 type Color = 'black' | 'white'
 
@@ -17,14 +19,19 @@ function getColor(index: number): Color {
 	return rowStartColor
 }
 
-
 function Board() {
+	const [board, setBoard] = createSignal([[]] as Pieces)
+
+	onMount(async () => {
+		const position = await invoke<string>("greet")
+		setBoard(parse(position))
+	})
 	return (<>
 		<div class="board">
-			<For each={Array(64).fill("1")}>{(_, i) =>
-				<Tile number={i()} color={getColor(i())} />}
+			<For each={board().flatMap(v => v)}>{(p, i) => <>
+				<Tile number={i()} color={getColor(i())} piece={p} />
+			</>}
 			</For>
-			<Pieces ></Pieces>
 		</div>
 	</>)
 }

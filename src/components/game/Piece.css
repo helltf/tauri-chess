@@ -1,5 +1,11 @@
 .piece {
-position: absolute;
-width: 12.5vh; height: 12.5vh;}
+	position: absolute;
+	width: 12.5vh;
+	height: 12.5vh;
+	cursor: pointer;
+	user-select: none;
+}
 
-.piece img {width: 100%; }
+.piece img { 
+	width: 100%; 
+}
