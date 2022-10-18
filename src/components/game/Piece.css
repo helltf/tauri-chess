@@ -1,10 +1,7 @@
-.piece {
-	width: 12.5vh;
-	height: 12.5vh;
+
+.piece{ 
+	width: 100%; 
+	height: 100%;
 	cursor: pointer;
 	user-select: none;
-}
-
-.piece img { 
-	width: 100%; 
 }

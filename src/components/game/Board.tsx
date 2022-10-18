@@ -26,8 +26,10 @@ function Board() {
 		const position = await invoke<string>("greet")
 		setBoard(parse(position))
 	})
+
+	const log = (ev: Event) => {console.log(ev)}
 	return (<>
-		<div class="board">
+		<div ondragover={log} class="board">
 			<For each={board().flatMap(v => v)}>{(p, i) => <>
 				<Tile number={i()} color={getColor(i())} piece={p} />
 			</>}
