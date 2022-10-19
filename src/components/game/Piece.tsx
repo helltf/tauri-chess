@@ -1,16 +1,16 @@
-import { onMount, Show } from 'solid-js'
-import { Piece as PieceType } from '../../ts/fen/parser'
+import {onMount, Show} from 'solid-js'
+import {Piece as PieceType} from '../../ts/fen/parser'
 import './Piece.css'
 
 function drag(ev: any) {
 	ev.dataTransfer.setData('text', ev.target.id)
 }
 
-function Piece(props: { piece: PieceType | null }) {
+function Piece(props: {piece: PieceType | null}) {
 	return (
 		<Show when={props.piece !== null}>
-			 <img
-			 	id={`${props.piece?.color}-${props.piece?.type}`}
+			<img
+				id={`${props.piece?.color}-${props.piece?.type}`}
 				draggable={true}
 				ondragstart={drag}
 				class='piece'

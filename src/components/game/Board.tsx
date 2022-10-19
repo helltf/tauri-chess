@@ -23,8 +23,7 @@ function Board() {
 	const [board, setBoard] = createSignal([[]] as Pieces)
 
 	onMount(async () => {
-		// const position = await invoke<string>('greet')
-		const position = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+		const position = await invoke<string>('greet')
 		setBoard(parse(position))
 	})
 
