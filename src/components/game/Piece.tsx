@@ -3,23 +3,18 @@ import {Piece as PieceType} from '../../ts/fen/parser'
 import './Piece.css'
 
 
-function Piece(props: {number: number, piece: PieceType | null, onDragStart: (ev: Event) => void}) {
+function Piece(props: {x: number, y: number, piece: PieceType | null}) {
 	const drag = (ev: any) => {
-		const data = JSON.stringify(props.piece)
+		const data = JSON.stringify({piece: props.piece, x: props.x, y: props.y})
 		ev.dataTransfer.setData('text', data)
-	}
-
-	const dragend = (ev: any) => {
-		props.onDragStart(ev)
 	}
 
 	return (
 		<Show when={props.piece !== null}>
 			<img
-				id={`${props.piece?.color}-${props.piece?.type}-${props.number}`}
+				id={`${props.piece?.color}-${props.piece?.type}-${props.x}${props.y}`}
 				draggable={true}
 				ondragstart={drag}
-				ondragend={dragend}
 				class='piece'
 				src={`pieces/${props.piece?.color}_${props.piece?.type}.svg`}
 			></img>
