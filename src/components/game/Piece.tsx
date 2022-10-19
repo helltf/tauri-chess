@@ -6,11 +6,11 @@ function drag(ev: any) {
 	ev.dataTransfer.setData('text', ev.target.id)
 }
 
-function Piece(props: {piece: PieceType | null}) {
+function Piece(props: {number: number, piece: PieceType | null}) {
 	return (
 		<Show when={props.piece !== null}>
 			<img
-				id={`${props.piece?.color}-${props.piece?.type}`}
+				id={`${props.piece?.color}-${props.piece?.type}-${props.number}`}
 				draggable={true}
 				ondragstart={drag}
 				class='piece'

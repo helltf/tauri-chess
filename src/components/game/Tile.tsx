@@ -26,7 +26,7 @@ function Tile(props: {
 			data-number={props.number}
 			class={`tile tile-${props.color}`}
 		>
-			<Piece piece={props.piece} />
+			<Piece number={props.number} piece={props.piece} />
 		</div>
 	)
 }
