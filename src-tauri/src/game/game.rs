@@ -39,4 +39,6 @@ impl Game {
             white_move: (true),
         }
     }
+    pub fn action() -> Result<String, String>{
+    }
 }
