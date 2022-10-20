@@ -1,8 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::game::action::{
-    bishop_action, king_action, knight_action, pawn_action, queen_action, rook_action,
-};
 use crate::parser::fen::parse_fen;
 
 const DEFAULT_POSITION: &str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -42,6 +39,30 @@ impl Game {
             white_move: (true),
         }
     }
+
+    pub fn is_attacked(&self, x: i32, y: i32, def_color: PieceColor) -> bool {
+        let attack_color = match def_color {
+            PieceColor::BLACK => PieceColor::WHITE,
+            PieceColor::WHITE => PieceColor::BLACK,
+        };
+
+        for row in self.board {
+            for piece in &row {
+                let attacks: bool = match piece {
+                    Some(p) => {
+                    
+                    },
+                    None => false,
+                };
+
+                if attacks {
+                    return true;
+                }
+            }
+        }
+        false
+    }
+
     pub fn action(
         &self,
         piece: Piece,
@@ -51,15 +72,16 @@ impl Game {
         from_y: i32,
     ) -> Result<String, String> {
         if x == from_x && y == from_y {
-            return Err("Invalid move".to_string())
+            return Err("Invalid move".to_string());
         }
+
         match piece.piece_type {
-            PieceType::KING => king_action(piece, x, y, from_x, from_y),
-            PieceType::QUEEN => queen_action(piece, x, y, from_x, from_y),
-            PieceType::ROOK => rook_action(piece, x, y, from_x, from_y),
-            PieceType::BISHOP => bishop_action(piece, x, y, from_x, from_y),
-            PieceType::KNIGHT => knight_action(piece, x, y, from_x, from_y),
-            PieceType::PAWN => pawn_action(piece, x, y, from_x, from_y),
+            PieceType::KING => self.king_action(piece, x, y, from_x, from_y),
+            PieceType::QUEEN => Game::queen_action(piece, x, y, from_x, from_y),
+            PieceType::ROOK => Game::rook_action(piece, x, y, from_x, from_y),
+            PieceType::BISHOP => Game::bishop_action(piece, x, y, from_x, from_y),
+            PieceType::KNIGHT => Game::knight_action(piece, x, y, from_x, from_y),
+            PieceType::PAWN => Game::pawn_action(piece, x, y, from_x, from_y),
         }
     }
 }
