@@ -1,18 +1,32 @@
+export enum PieceColor {
+	BLACK = 'BLACK',
+	WHITE = 'WHITE'
+}
+
+export enum PieceType {
+	KING = "KING",
+	QUEEN = "QUEEN",
+	ROOK = "ROOK",
+	KNIGHT = "KNIGHT",
+	PAWN = "PAWN",
+	BISHOP = "BISHOP"
+}
+
 export interface Piece {
 	type: string
-	color: 'white' | 'black'
+	color: PieceColor
 }
 
 export type PieceRow = (Piece | null)[]
 export type Pieces = PieceRow[]
 
-const pieceEncodings: {[key: string]: string} = {
-	k: 'king',
-	r: 'rook',
-	q: 'queen',
-	n: 'knight',
-	p: 'pawn',
-	b: 'bishop'
+const pieceEncodings: {[key: string]: PieceType} = {
+	k: PieceType.KING,
+	r: PieceType.ROOK,
+	q: PieceType.QUEEN,
+	n: PieceType.KNIGHT,
+	p:PieceType.PAWN,
+	b: PieceType.BISHOP
 }
 
 const isLowerCase = (chars: string): boolean => {
@@ -28,7 +42,7 @@ const parseRow = (row: string): PieceRow => {
 		if (mappedPiece) {
 			pieces.push({
 				type: mappedPiece,
-				color: isLowerCase(c) ? 'black' : 'white'
+				color: isLowerCase(c) ? PieceColor.BLACK : PieceColor.WHITE
 			})
 			return pieces
 		}

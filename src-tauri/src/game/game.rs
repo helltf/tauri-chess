@@ -1,8 +1,10 @@
+use serde::{Deserialize, Serialize};
+
 use crate::parser::fen::parse_fen;
 
 const DEFAULT_POSITION: &str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum PieceType {
     KING,
     ROOK,
@@ -12,14 +14,15 @@ pub enum PieceType {
     BISHOP,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum PieceColor {
     WHITE,
-    BLACK,
+    BLACK 
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Piece {
+#[serde(rename(deserialize = "type"))]
     pub piece_type: PieceType,
     pub color: PieceColor,
 }
@@ -37,4 +40,3 @@ impl Game {
         }
     }
 }
-
