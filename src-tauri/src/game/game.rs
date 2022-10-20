@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::parser::fen::parse_fen;
+use crate::game::action::{king_action, bishop_action,pawn_action,queen_action,knight_action, rook_action};
 
 const DEFAULT_POSITION: &str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
@@ -17,12 +18,12 @@ pub enum PieceType {
 #[derive(Debug, Serialize, Deserialize)]
 pub enum PieceColor {
     WHITE,
-    BLACK 
+    BLACK,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Piece {
-#[serde(rename(deserialize = "type"))]
+    #[serde(rename(deserialize = "type"))]
     pub piece_type: PieceType,
     pub color: PieceColor,
 }
@@ -39,6 +40,21 @@ impl Game {
             white_move: (true),
         }
     }
-    pub fn action() -> Result<String, String>{
+    pub fn action(
+&self,
+        piece: Piece,
+        x: i32,
+        y: i32,
+        from_x: i32,
+        from_y: i32,
+    ) -> Result<String, String> {
+        match piece.piece_type {
+           PieceType::KING => king_action(piece, x, y, from_x, from_y),
+           PieceType::QUEEN => queen_action(piece, x, y, from_x, from_y),
+           PieceType::ROOK => rook_action(piece, x, y, from_x, from_y),
+           PieceType::BISHOP => bishop_action(piece, x, y, from_x, from_y),
+           PieceType::KNIGHT => knight_action(piece, x, y, from_x, from_y),
+           PieceType::PAWN => pawn_action(piece, x, y, from_x, from_y),
+        }
     }
 }

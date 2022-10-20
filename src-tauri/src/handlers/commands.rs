@@ -15,6 +15,5 @@ pub fn action(
     from_y: i32,
     game: State<Game>,
 ) -> Result<String, String> {
-    game.action(piece, x, y, from_x, from_y)
-    return Ok("success".to_string());
+    return game.action(piece, x, y, from_x, from_y);
 }
