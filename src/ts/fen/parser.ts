@@ -1,9 +1,8 @@
-import {off} from "process"
-
 export interface Piece {
 	type: string
 	color: 'white' | 'black'
 }
+
 export type PieceRow = (Piece | null)[]
 export type Pieces = PieceRow[]
 

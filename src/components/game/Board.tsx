@@ -1,32 +1,60 @@
-import Tile from "./Tile";
+import Tile from './Tile'
 import './Board.css'
-import Pieces from "./Pieces";
-import {For} from 'solid-js'
+import {createSignal, For} from 'solid-js'
+import {parse, Piece, Pieces} from '../../ts/fen/parser'
+import {invoke} from '@tauri-apps/api/tauri'
+import {onMount} from 'solid-js'
 
 type Color = 'black' | 'white'
 
-function getColor(index: number): Color {
-	const row = Math.floor(index / 8)
+function getColor(x: number, y: number): Color {
+	let rowStartColor: Color = y % 2 ? 'white' : 'black'
 
-	let rowStartColor: Color = row % 2 ? 'white' : 'black'
-
-	if (index % 2) {
+	if (x % 2) {
 		rowStartColor = rowStartColor === 'white' ? 'black' : 'white'
 	}
 
 	return rowStartColor
 }
 
-
 function Board() {
-	return (<>
-		<div class="board">
-			<For each={Array(64).fill("1")}>{(_, i) =>
-				<Tile number={i()} color={getColor(i())} />}
-			</For>
-			<Pieces ></Pieces>
-		</div>
-	</>)
+	const [board, setBoard] = createSignal([[]] as Pieces)
+
+	onMount(async () => {
+		const position = await invoke<string>('greet')
+		setBoard(parse(position))
+	})
+
+	const onMove = (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
+		if (x === fromX && y === fromY) return
+		const newBoard = JSON.parse(JSON.stringify(board()))
+
+		newBoard[y][x] = piece
+		newBoard[fromY][fromX] = null
+		setBoard(newBoard)
+	}
+
+	return (
+		<>
+			<div id='board' class='board'>
+				<For each={board()}>
+					{(row, rowIndex) => (
+						<For each={row}>
+							{(p, colIndex) => (
+								<Tile
+									onMove={onMove}
+									x={colIndex()}
+									y={rowIndex()}
+									color={getColor(colIndex(), rowIndex())}
+									piece={p}
+								/>
+							)}
+						</For>
+					)}
+				</For>
+			</div>
+		</>
+	)
 }
 
 export default Board
