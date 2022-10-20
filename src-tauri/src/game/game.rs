@@ -1,8 +1,6 @@
 use crate::parser::fen::parse_fen;
 
-pub fn get_position() -> String {
-    return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1".to_string();
-}
+const DEFAULT_POSITION: &str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 #[derive(Debug)]
 pub enum PieceType {
@@ -34,7 +32,7 @@ pub struct Game {
 impl Game {
     pub fn new() -> Game {
         Game {
-            board: parse_fen(get_position()),
+            board: parse_fen(DEFAULT_POSITION),
             white_move: (true),
         }
     }

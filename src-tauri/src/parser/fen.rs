@@ -68,7 +68,7 @@ fn parse_row(row: &str) -> Vec<Option<Piece>> {
             Some(p) => result.push(Some(p)),
             None => {
                 let offset = character as u32 - '0' as u32;
-                for i in 0..offset {
+                for _ in 0..offset {
                     result.push(None)
                 }
             }
@@ -87,7 +87,7 @@ fn parse_position(position: &str) -> Vec<Vec<Option<Piece>>> {
     parsed_rows
 }
 
-pub fn parse_fen(fen: String) -> Vec<Vec<Option<Piece>>> {
+pub fn parse_fen(fen: &str) -> Vec<Vec<Option<Piece>>> {
     let parts: Vec<&str> = fen.split(" ").collect::<Vec<&str>>();
 
     let pieces = parse_position(parts[0]);
