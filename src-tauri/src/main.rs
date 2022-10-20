@@ -4,6 +4,7 @@
 )]
 mod game;
 mod handlers;
+mod parser;
 
 use game::game::Game;
 use handlers::commands;
