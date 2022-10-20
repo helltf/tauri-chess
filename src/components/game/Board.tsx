@@ -26,8 +26,11 @@ function Board() {
 	})
 
 	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
-		const result = await invoke('action', {piece, x, y, fromX, fromY})
-		console.log(result)
+		try {
+			const result = await invoke('action', {piece, x, y, fromX, fromY})
+		} catch (e) {
+			return console.error(e)
+		}
 		const newBoard = JSON.parse(JSON.stringify(board()))
 
 		newBoard[y][x] = piece
