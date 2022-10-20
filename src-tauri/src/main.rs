@@ -5,10 +5,12 @@
 mod game;
 mod handlers;
 
+use game::game::Game;
 use handlers::commands;
 
 fn main() {
     tauri::Builder::default()
+        .manage(Game::new())
         .invoke_handler(tauri::generate_handler![commands::get_position])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

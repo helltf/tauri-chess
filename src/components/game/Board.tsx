@@ -21,7 +21,7 @@ function Board() {
 	const [board, setBoard] = createSignal([[]] as Pieces)
 
 	onMount(async () => {
-		const position = await invoke<string>('greet')
+		const position = await invoke<string>('get_position')
 		setBoard(parse(position))
 	})
 
