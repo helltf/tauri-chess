@@ -1,10 +1,13 @@
-use crate::game::game::{PieceColor, PieceType, Piece};
+use crate::game::{
+    action::{Bishop, King, Knight, Pawn, Queen, Rook},
+    game::{Piece, PieceColor},
+};
 
 fn is_lowercase(character: char) -> bool {
     return char::is_lowercase(character);
 }
 
-fn get_piece(character: char) -> Option<Piece> {
+fn get_piece(character: char) -> Option<Box<dyn Piece>> {
     let color: PieceColor = if is_lowercase(character) {
         PieceColor::BLACK
     } else {
@@ -14,53 +17,35 @@ fn get_piece(character: char) -> Option<Piece> {
     let low_char = String::from_iter(character.to_lowercase().collect::<Vec<_>>());
 
     if low_char == "k" {
-        return Some(Piece {
-            piece_type: PieceType::KING,
-            color: color,
-        });
+        return Some(Box::new(King { color }));
     }
 
     if low_char == "r" {
-        return Some(Piece {
-            piece_type: PieceType::ROOK,
-            color: color,
-        });
+        return Some(Box::new(Rook { color }));
     }
 
     if low_char == "q" {
-        return Some(Piece {
-            piece_type: PieceType::QUEEN,
-            color: color,
-        });
+        return Some(Box::new(Queen { color }));
     }
 
     if low_char == "n" {
-        return Some(Piece {
-            piece_type: PieceType::KNIGHT,
-            color: color,
-        });
+        return Some(Box::new(Knight { color }));
     }
 
     if low_char == "p" {
-        return Some(Piece {
-            piece_type: PieceType::PAWN,
-            color: color,
-        });
+        return Some(Box::new(Pawn { color }));
     }
 
     if low_char == "b" {
-        return Some(Piece {
-            piece_type: PieceType::BISHOP,
-            color: color,
-        });
+        return Some(Box::new(Bishop { color }));
     }
 
     None
 }
 
-fn parse_row(row: &str) -> Vec<Option<Piece>> {
+fn parse_row(row: &str) -> Vec<Option<Box<dyn Piece>>> {
     let chars = row.chars().collect::<Vec<char>>();
-    let mut result: Vec<Option<Piece>> = Vec::new();
+    let mut result: Vec<Option<Box<dyn Piece>>> = Vec::new();
 
     for character in chars {
         let piece = get_piece(character);
@@ -77,7 +62,7 @@ fn parse_row(row: &str) -> Vec<Option<Piece>> {
     result
 }
 
-fn parse_position(position: &str) -> Vec<Vec<Option<Piece>>> {
+fn parse_position(position: &str) -> Vec<Vec<Option<Box<dyn Piece>>>> {
     let rows: Vec<&str> = position.split('/').collect();
 
     let parsed_rows = rows
@@ -87,7 +72,7 @@ fn parse_position(position: &str) -> Vec<Vec<Option<Piece>>> {
     parsed_rows
 }
 
-pub fn parse_fen(fen: &str) -> Vec<Vec<Option<Piece>>> {
+pub fn parse_fen(fen: &str) -> Vec<Vec<Option<Box<dyn Piece>>>> {
     let parts: Vec<&str> = fen.split(" ").collect::<Vec<&str>>();
 
     let pieces = parse_position(parts[0]);

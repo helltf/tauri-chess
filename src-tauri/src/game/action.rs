@@ -1,7 +1,62 @@
 use crate::game::game::Piece;
 
-use super::game::Game;
+use super::game::{Game, PieceColor};
 
+pub struct King {
+    pub color: PieceColor,
+}
+
+pub struct Queen {
+    pub color: PieceColor,
+}
+pub struct Rook {
+    pub color: PieceColor,
+}
+pub struct Bishop {
+    pub color: PieceColor,
+}
+pub struct Knight {
+    pub color: PieceColor,
+}
+pub struct Pawn {
+    pub color: PieceColor,
+}
+impl Piece for King {
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+
+impl Piece for Queen {
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+
+impl Piece for Rook{
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+
+impl Piece for Bishop{
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+
+impl Piece for Knight{
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+
+impl Piece for Pawn{
+    fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
+        Ok("success".to_string())
+    }
+}
+/*
 impl Game {
     pub fn king_action(
         &self,
@@ -71,4 +126,4 @@ impl Game {
     ) -> Result<String, String> {
         Ok("success".to_string())
     }
-}
+}*/
