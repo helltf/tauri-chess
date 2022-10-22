@@ -19,6 +19,10 @@ pub enum PieceColor {
     WHITE,
     BLACK,
 }
+pub struct BitBoard(pub u64);
+pub struct Board {
+    pub pieces: [BitBoard; 12],
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Piece {
@@ -43,31 +47,6 @@ impl Game {
     pub fn get_piece(&self, x: i32, y: i32) -> &Option<Piece> {
         self.board.get(y as usize).unwrap().get(x as usize).unwrap()
     }
-
-    pub fn update(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> () {
-        self.board[y as usize][x as usize] = *self.get_piece(from_x, from_y);
-    }
-
-    /* pub fn is_attacked(&self, x: i32, y: i32, def_color: PieceColor) -> bool {
-        let attack_color = match def_color {
-            PieceColor::BLACK => PieceColor::WHITE,
-            PieceColor::WHITE => PieceColor::BLACK,
-        };
-
-        for row in self.board {
-            for piece in &row {
-                let attacks: bool = match piece {
-                    Some(p) => {}
-                    None => false,
-                };
-
-                if attacks {
-                    return true;
-                }
-            }
-        }
-        false
-    }*/
 
     pub fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
         if x == from_x && y == from_y {
