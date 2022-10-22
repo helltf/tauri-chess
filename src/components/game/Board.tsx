@@ -27,7 +27,7 @@ function Board() {
 
 	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
 		try {
-			const result = await invoke('action', {piece, x, y, fromX, fromY})
+			const result = await invoke('action', {x, y, fromX, fromY})
 		} catch (e) {
 			return console.error(e)
 		}

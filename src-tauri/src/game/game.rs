@@ -40,7 +40,15 @@ impl Game {
         }
     }
 
-    pub fn is_attacked(&self, x: i32, y: i32, def_color: PieceColor) -> bool {
+    pub fn get_piece(&self, x: i32, y: i32) -> &Option<Piece> {
+        self.board.get(y as usize).unwrap().get(x as usize).unwrap()
+    }
+
+    pub fn update(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> () {
+        self.board[y as usize][x as usize] = *self.get_piece(from_x, from_y);
+    }
+
+    /* pub fn is_attacked(&self, x: i32, y: i32, def_color: PieceColor) -> bool {
         let attack_color = match def_color {
             PieceColor::BLACK => PieceColor::WHITE,
             PieceColor::WHITE => PieceColor::BLACK,
@@ -49,9 +57,7 @@ impl Game {
         for row in self.board {
             for piece in &row {
                 let attacks: bool = match piece {
-                    Some(p) => {
-                    
-                    },
+                    Some(p) => {}
                     None => false,
                 };
 
@@ -61,27 +67,26 @@ impl Game {
             }
         }
         false
-    }
+    }*/
 
-    pub fn action(
-        &self,
-        piece: Piece,
-        x: i32,
-        y: i32,
-        from_x: i32,
-        from_y: i32,
-    ) -> Result<String, String> {
+    pub fn action(&self, x: i32, y: i32, from_x: i32, from_y: i32) -> Result<String, String> {
         if x == from_x && y == from_y {
             return Err("Invalid move".to_string());
         }
+        let piece = self.get_piece(from_x, from_y);
 
-        match piece.piece_type {
-            PieceType::KING => self.king_action(piece, x, y, from_x, from_y),
-            PieceType::QUEEN => Game::queen_action(piece, x, y, from_x, from_y),
-            PieceType::ROOK => Game::rook_action(piece, x, y, from_x, from_y),
-            PieceType::BISHOP => Game::bishop_action(piece, x, y, from_x, from_y),
-            PieceType::KNIGHT => Game::knight_action(piece, x, y, from_x, from_y),
-            PieceType::PAWN => Game::pawn_action(piece, x, y, from_x, from_y),
+        match piece {
+            Some(p) => {
+                return match p.piece_type {
+                    PieceType::KING => self.king_action(p, x, y, from_x, from_y),
+                    PieceType::QUEEN => Game::queen_action(p, x, y, from_x, from_y),
+                    PieceType::ROOK => Game::rook_action(p, x, y, from_x, from_y),
+                    PieceType::BISHOP => Game::bishop_action(p, x, y, from_x, from_y),
+                    PieceType::KNIGHT => Game::knight_action(p, x, y, from_x, from_y),
+                    PieceType::PAWN => Game::pawn_action(p, x, y, from_x, from_y),
+                }
+            }
+            None => Err("invalid piece".to_string()),
         }
     }
 }

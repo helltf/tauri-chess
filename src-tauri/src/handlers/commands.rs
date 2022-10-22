@@ -8,12 +8,17 @@ pub fn get_position(state: State<Game>) -> String {
 
 #[tauri::command]
 pub fn action(
-    piece: Piece,
     x: i32,
     y: i32,
     from_x: i32,
     from_y: i32,
     game: State<Game>,
 ) -> Result<String, String> {
-    return game.action(piece, x, y, from_x, from_y);
+    let result = game.action(x, y, from_x, from_y);
+
+    match result {
+        Ok(s) => game.update(x, y, from_x, from_y),
+        Err(e) => println!("{:?}", e),
+    }
+    return result;
 }
