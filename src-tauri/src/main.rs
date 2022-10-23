@@ -4,11 +4,8 @@
 )]
 extern crate chess;
 
-mod game;
 mod handlers;
-mod parser;
 
-use game::game::Game;
 use handlers::commands;
 use chess::Board;
 
