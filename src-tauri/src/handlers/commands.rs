@@ -1,8 +1,8 @@
-use crate::game::game::{Game, Piece};
 use tauri::State;
+use chess::Board;
 
 #[tauri::command]
-pub fn get_position(state: State<Game>) -> String {
+pub fn get_position(state: State<Board>) -> String {
     return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1".to_string();
 }
 
@@ -12,13 +12,8 @@ pub fn action(
     y: i32,
     from_x: i32,
     from_y: i32,
-    game: State<Game>,
+    board: State<Board>,
 ) -> Result<String, String> {
-    let result = game.action(x, y, from_x, from_y);
 
-    match result {
-        Ok(s) => game.update(x, y, from_x, from_y),
-        Err(e) => println!("{:?}", e),
-    }
-    return result;
+    return Err("abc");
 }
