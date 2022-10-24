@@ -21,12 +21,16 @@ function Board() {
 	const [board, setBoard] = createSignal([[]] as Pieces)
 
 	onMount(async () => {
-		const position = await invoke<string>('greet')
+		const position = await invoke<string>('get_position')
 		setBoard(parse(position))
 	})
 
-	const onMove = (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
-		if (x === fromX && y === fromY) return
+	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
+		try {
+			const result = await invoke('action', {x, y, fromX, fromY})
+		} catch (e) {
+			return console.error(e)
+		}
 		const newBoard = JSON.parse(JSON.stringify(board()))
 
 		newBoard[y][x] = piece
