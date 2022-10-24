@@ -26,15 +26,7 @@ jobs:
       - name: Run build script
         run: |
           yarn 
-          yarn build
-  
-  build-backend:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build
-        run: |
+          yarn build 
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf         
           cd src-tauri
           cargo build --verbose
