@@ -24,7 +24,6 @@ pub fn action(
     let to_square = get_square(x, y);
     let from_square = get_square(from_x, from_y);
     let action = ChessMove::new(from_square, to_square, None);
-    println!("{:?}", action);
     let legal = board.legal(action);
     if legal {
         let result = board.make_move_new(action);
