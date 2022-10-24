@@ -1,10 +1,15 @@
+use std::sync::Mutex;
+
 use chess::{Board, ChessMove, File, Rank, Square};
 use tauri::State;
 
 #[tauri::command]
-pub fn get_position(state: State<Board>) -> String {
+pub fn get_position() -> String {
     return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1".to_string();
 }
+
+#[derive(Default)]
+pub struct Game(pub Mutex<Board>);
 
 #[tauri::command]
 pub fn action(
@@ -12,13 +17,21 @@ pub fn action(
     y: i32,
     from_x: i32,
     from_y: i32,
-    mut board:State<Board>,
+    game: State<Game>,
 ) -> Result<String, String> {
+    let mut board = game.0.lock().unwrap();
+    println!("{:?}", board.side_to_move());
     let to_square = get_square(x, y);
     let from_square = get_square(from_x, from_y);
     let action = ChessMove::new(from_square, to_square, None);
-    let result = board.make_move(action, &board);
-    println!("{:?}", result);
+    let legal = board.legal(action);
+
+    if legal {
+        let result = board.make_move_new(action);
+        *board = result;
+        return Ok("Success".to_string());
+    }
+    
     return Err("abc".to_string());
 }
 

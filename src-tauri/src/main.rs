@@ -6,12 +6,12 @@ extern crate chess;
 
 mod handlers;
 
-use handlers::commands;
+use handlers::commands::{self, Game};
 use chess::Board;
 
 fn main() {
     tauri::Builder::default()
-        .manage(Board::default())
+        .manage(Game(Default::default()))
         .invoke_handler(tauri::generate_handler![
             commands::get_position,
             commands::action
