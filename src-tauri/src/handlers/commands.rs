@@ -20,18 +20,18 @@ pub fn action(
     game: State<Game>,
 ) -> Result<String, String> {
     let mut board = game.0.lock().unwrap();
-    println!("{:?}", board.side_to_move());
+
     let to_square = get_square(x, y);
     let from_square = get_square(from_x, from_y);
     let action = ChessMove::new(from_square, to_square, None);
+    println!("{:?}", action);
     let legal = board.legal(action);
-
     if legal {
         let result = board.make_move_new(action);
         *board = result;
         return Ok("Success".to_string());
     }
-    
+
     return Err("abc".to_string());
 }
 
@@ -57,14 +57,14 @@ pub fn get_rank(rank: i32) -> Option<Rank> {
 
 pub fn get_file(file: i32) -> Option<File> {
     match file {
-        7 => Some(File::A),
-        6 => Some(File::B),
-        5 => Some(File::C),
-        4 => Some(File::D),
-        3 => Some(File::E),
-        2 => Some(File::F),
-        1 => Some(File::G),
-        0 => Some(File::H),
+        0 => Some(File::A),
+        1 => Some(File::B),
+        2 => Some(File::C),
+        3 => Some(File::D),
+        4 => Some(File::E),
+        5 => Some(File::F),
+        6 => Some(File::G),
+        7 => Some(File::H),
         _ => None,
     }
 }
