@@ -3,8 +3,8 @@ use chess::{Board, ChessMove};
 use crate::game::game::{Game, get_square};
 
 #[tauri::command]
-pub fn get_position() -> String {
-    return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1".to_string();
+pub fn get_position(game: State<Game>) -> String {
+    return game.0.lock().unwrap().to_string() 
 }
 
 #[tauri::command]
