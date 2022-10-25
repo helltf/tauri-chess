@@ -26,7 +26,8 @@ function Board() {
 		setBoard(parse(position))
 	})
 
-	const onReset = () => {
+	const onReset = async () => {
+	 await invoke('reset')	
 	}
 
 	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {

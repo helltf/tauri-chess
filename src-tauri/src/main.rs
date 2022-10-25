@@ -5,9 +5,11 @@
 extern crate chess;
 
 mod handlers;
+mod game;
 
-use handlers::commands::{self, Game};
 use chess::Board;
+use game::game::Game;
+use handlers::commands;
 
 fn main() {
     tauri::Builder::default()
