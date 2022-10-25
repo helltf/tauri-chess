@@ -1,5 +1,5 @@
 use tauri::State;
-use chess::ChessMove;
+use chess::{Board, ChessMove};
 use crate::game::game::{Game, get_square};
 
 #[tauri::command]
@@ -30,3 +30,7 @@ pub fn action(
     return Err("abc".to_string());
 }
 
+#[tauri::command]
+pub fn reset(game: State<Game>) -> (){
+    *game.0.lock().unwrap() = Board::default()
+}

@@ -7,7 +7,6 @@ extern crate chess;
 mod handlers;
 mod game;
 
-use chess::Board;
 use game::game::Game;
 use handlers::commands;
 
@@ -16,7 +15,8 @@ fn main() {
         .manage(Game(Default::default()))
         .invoke_handler(tauri::generate_handler![
             commands::get_position,
-            commands::action
+            commands::action,
+            commands::reset
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
