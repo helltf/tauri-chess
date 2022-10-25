@@ -4,6 +4,7 @@ import {createSignal, For} from 'solid-js'
 import {parse, Piece, Pieces} from '../../ts/fen/parser'
 import {invoke} from '@tauri-apps/api/tauri'
 import {onMount} from 'solid-js'
+import Reset from './Reset'
 
 type Color = 'black' | 'white'
 
@@ -25,6 +26,9 @@ function Board() {
 		setBoard(parse(position))
 	})
 
+	const onReset = () => {
+	}
+
 	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
 		try {
 			const result = await invoke('action', {x, y, fromX, fromY})
@@ -39,7 +43,7 @@ function Board() {
 	}
 
 	return (
-		<>
+		<div class='game'>
 			<div id='board' class='board'>
 				<For each={board()}>
 					{(row, rowIndex) => (
@@ -57,7 +61,8 @@ function Board() {
 					)}
 				</For>
 			</div>
-		</>
+			<Reset onReset={onReset} ></Reset>
+		</div >
 	)
 }
 
