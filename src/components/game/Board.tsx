@@ -22,11 +22,12 @@ function getColor(x: number, y: number): Color {
 function Board() {
 	const [board, setBoard] = createSignal([[]] as Pieces)
 	const location = useLocation()
+
 	onMount(async () => {
 		const state = location.state as Readonly<Partial<{position: string | null}>>
 
 		const position = state?.position ?? await invoke<string>('get_position')
-		console.log(position)
+		await invoke('set_position', {position})
 		setBoard(parse(position))
 	})
 
@@ -38,7 +39,7 @@ function Board() {
 
 	const onMove = async (piece: Piece, x: number, y: number, fromX: number, fromY: number) => {
 		try {
-			const result = await invoke('action', {x, y, fromX, fromY})
+			await invoke('action', {x, y, fromX, fromY})
 		} catch (e) {
 			return console.error(e)
 		}
