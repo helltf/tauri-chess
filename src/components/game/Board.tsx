@@ -5,7 +5,7 @@ import { parse, Piece, Pieces } from "../../ts/fen/parser";
 import { invoke } from "@tauri-apps/api/tauri";
 import { onMount } from "solid-js";
 import Reset from "./Reset";
-import { useLocation } from "@solidjs/router";
+import { useLocation, useNavigate } from "@solidjs/router";
 
 type Color = "black" | "white";
 
@@ -22,15 +22,20 @@ function getColor(x: number, y: number): Color {
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces);
   const location = useLocation();
+  const navigate = useNavigate();
 
   onMount(async () => {
     const state = location.state as Readonly<
       Partial<{ position: string | null }>
     >;
-
-    const position = state?.position ?? (await invoke<string>("get_position"));
-    await invoke("set_position", { position });
-    setBoard(parse(position));
+    try {
+      const position =
+        state?.position ?? (await invoke<string>("get_position"));
+      await invoke("set_position", { position });
+      setBoard(parse(position));
+    } catch (e: any) {
+      navigate("/");
+    }
   });
 
   const onReset = async () => {
