@@ -1,6 +1,6 @@
 export enum PieceColor {
   BLACK = 'black',
-  WHITE = 'white',
+  WHITE = 'white'
 }
 
 export enum PieceType {
@@ -9,7 +9,7 @@ export enum PieceType {
   ROOK = 'rook',
   KNIGHT = 'knight',
   PAWN = 'pawn',
-  BISHOP = 'bishop',
+  BISHOP = 'bishop'
 }
 
 export interface Piece {
@@ -37,7 +37,7 @@ const parseRow = (row: string): PieceRow => {
   const chars = row.split('')
 
   return chars.reduce<PieceRow>((pieces, c) => {
-    const mappedPiece = pieceEncodings[c.toLowerCase()]
+    const mappedPiece: string | undefined = pieceEncodings[c.toLowerCase()]
 
     if (mappedPiece) {
       pieces.push({
