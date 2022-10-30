@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["standard-with-typescript", "plugin:solid/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [],
+  "parserOptions": {
+    "project": ["tsconfig.json"],
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["solid"],
+  "rules": {
+    "semi": "error",
+    "solid/reactivity": "warn",
+    "solid/no-destructure": "warn",
+    "solid/jsx-no-undef": "error",
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/explicit-function-return-type": 1
+  }
+}
