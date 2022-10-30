@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
-import solidPlugin from "vite-plugin-solid";
+import { defineConfig } from 'vite'
+import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
   plugins: [solidPlugin()],
@@ -10,17 +10,17 @@ export default defineConfig({
   // tauri expects a fixed port, fail if that port is not available
   server: {
     port: 1420,
-    strictPort: true,
+    strictPort: true
   },
   // to make use of `TAURI_DEBUG` and other env variables
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
-  envPrefix: ["VITE_", "TAURI_"],
+  envPrefix: ['VITE_', 'TAURI_'],
   build: {
     // Tauri supports es2021
-    target: ["es2021", "chrome100", "safari13"],
+    target: ['es2021', 'chrome100', 'safari13'],
     // don't minify for debug builds
-    minify: !process.env.TAURI_DEBUG ? "esbuild" : false,
+    minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
     // produce sourcemaps for debug builds
-    sourcemap: !!process.env.TAURI_DEBUG,
-  },
-});
+    sourcemap: !!process.env.TAURI_DEBUG
+  }
+})

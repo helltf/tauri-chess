@@ -1,48 +1,47 @@
-import Tile from "./Tile";
-import "./Board.css";
-import { createSignal, For } from "solid-js";
-import { parse, Piece, Pieces } from "../../ts/fen/parser";
-import { invoke } from "@tauri-apps/api/tauri";
-import { onMount } from "solid-js";
-import Reset from "./Reset";
-import { useLocation, useNavigate } from "@solidjs/router";
+import Tile from './Tile'
+import './Board.css'
+import { createSignal, For, onMount } from 'solid-js'
+import { parse, Piece, Pieces } from '../../ts/fen/parser'
+import { invoke } from '@tauri-apps/api/tauri'
+import Reset from './Reset'
+import { useLocation, useNavigate } from '@solidjs/router'
 
-type Color = "black" | "white";
+type Color = 'black' | 'white'
 
-function getColor(x: number, y: number): Color {
-  let rowStartColor: Color = y % 2 ? "white" : "black";
+function getColor (x: number, y: number): Color {
+  let rowStartColor: Color = y % 2 ? 'white' : 'black'
 
   if (x % 2) {
-    rowStartColor = rowStartColor === "white" ? "black" : "white";
+    rowStartColor = rowStartColor === 'white' ? 'black' : 'white'
   }
 
-  return rowStartColor;
+  return rowStartColor
 }
 
-function Board() {
-  const [board, setBoard] = createSignal([[]] as Pieces);
-  const location = useLocation();
-  const navigate = useNavigate();
+function Board () {
+  const [board, setBoard] = createSignal([[]] as Pieces)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   onMount(async () => {
     const state = location.state as Readonly<
-      Partial<{ position: string | null }>
-    >;
+    Partial<{ position: string | null }>
+    >
     try {
       const position =
-        state?.position ?? (await invoke<string>("get_position"));
-      await invoke("set_position", { position });
-      setBoard(parse(position));
+        state?.position ?? (await invoke<string>('get_position'))
+      await invoke('set_position', { position })
+      setBoard(parse(position))
     } catch (e: any) {
-      navigate("/");
+      navigate('/')
     }
-  });
+  })
 
   const onReset = async () => {
-    await invoke("reset");
-    const currentPosition = await invoke<string>("get_position");
-    setBoard(parse(currentPosition));
-  };
+    await invoke('reset')
+    const currentPosition = await invoke<string>('get_position')
+    setBoard(parse(currentPosition))
+  }
 
   const onMove = async (
     piece: Piece,
@@ -52,16 +51,16 @@ function Board() {
     fromY: number
   ) => {
     try {
-      await invoke("action", { x, y, fromX, fromY });
+      await invoke('action', { x, y, fromX, fromY })
     } catch (e) {
-      return console.error(e);
+      return console.error(e)
     }
-    const newBoard = JSON.parse(JSON.stringify(board()));
+    const newBoard = JSON.parse(JSON.stringify(board()))
 
-    newBoard[y][x] = piece;
-    newBoard[fromY][fromX] = null;
-    setBoard(newBoard);
-  };
+    newBoard[y][x] = piece
+    newBoard[fromY][fromX] = null
+    setBoard(newBoard)
+  }
 
   return (
     <div class="game">
@@ -82,9 +81,9 @@ function Board() {
           )}
         </For>
       </div>
-      <Reset onReset={onReset}></Reset>
+      <Reset onReset={onReset} />
     </div>
-  );
+  )
 }
 
-export default Board;
+export default Board

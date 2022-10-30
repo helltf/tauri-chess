@@ -1,14 +1,14 @@
-import { A, useNavigate } from "@solidjs/router";
-import { createSignal, Signal } from "solid-js";
-import "./Start.css";
+import { A, useNavigate } from '@solidjs/router'
+import { createSignal, Signal } from 'solid-js'
+import './Start.css'
 
-function Start() {
-  const [position, setPosition]: Signal<string | null> = createSignal(null);
-  const navigate = useNavigate();
+function Start () {
+  const [position, setPosition]: Signal<string | null> = createSignal(null)
+  const navigate = useNavigate()
 
   const startGame = () => {
-    navigate("/game", { state: { position: position() } });
-  };
+    navigate('/game', { state: { position: position() } })
+  }
 
   return (
     <main class="main-view">
@@ -18,11 +18,11 @@ function Start() {
         placeholder="Start from position"
         onInput={(event) => setPosition(event.data)}
       />
-      <button onclick={startGame} class="game-btn">
+      <button onClick={startGame} class="game-btn">
         Start a Game
       </button>
     </main>
-  );
+  )
 }
 
-export default Start;
+export default Start
