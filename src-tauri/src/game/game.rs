@@ -1,4 +1,4 @@
-use chess::{Board, ChessMove, File, Rank, Square};
+use chess::{Board, File, Rank, Square};
 use std::sync::Mutex;
 
 #[derive(Default)]

@@ -1,11 +1,11 @@
 .board {
-display: grid;
- grid-template-columns: repeat(8, minmax(0, 1fr));
- height: 100%;
- aspect-ratio: 1/1;
- margin: auto;
- grid-auto-rows: 1fr;
- overflow: hidden;
+	display: grid;
+ 	grid-template-columns: repeat(8, minmax(0, 1fr));
+ 	height: 100%;
+ 	aspect-ratio: 1/1;
+ 	margin: auto;
+ 	grid-auto-rows: 1fr;
+ 	overflow: hidden;
 }
 
 .game{
