@@ -4,11 +4,12 @@ import { createSignal, For, onMount } from 'solid-js'
 import { parse, Piece, Pieces } from '../../ts/fen/parser'
 import { invoke } from '@tauri-apps/api/tauri'
 import Reset from './Reset'
+import Back from './Back'
 import { useLocation, useNavigate } from '@solidjs/router'
 
 type Color = 'black' | 'white'
 
-function getColor (x: number, y: number): Color {
+function getColor(x: number, y: number): Color {
   let rowStartColor: Color = y % 2 ? 'white' : 'black'
 
   if (x % 2) {
@@ -18,18 +19,17 @@ function getColor (x: number, y: number): Color {
   return rowStartColor
 }
 
-function Board () {
+function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
   const location = useLocation()
   const navigate = useNavigate()
 
   onMount(async () => {
     const state = location.state as Readonly<
-    Partial<{ position: string | null }>
+      Partial<{ position: string | null }>
     >
     try {
-      const position =
-        state?.position ?? (await invoke<string>('get_position'))
+      const position = state?.position ?? (await invoke<string>('get_position'))
       await invoke('set_position', { position })
       setBoard(parse(position))
     } catch (e: any) {
@@ -81,7 +81,10 @@ function Board () {
           )}
         </For>
       </div>
-      <Reset onReset={onReset} />
+      <div class="buttons">
+        <Reset onReset={onReset} />
+        <Back />
+      </div>
     </div>
   )
 }
