@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["standard-with-typescript", "plugin:solid/recommended"],
+  "extends": ["eslint:recommended", "plugin:solid/typescript"],
   "parser": "@typescript-eslint/parser",
   "overrides": [],
   "parserOptions": {
@@ -16,14 +16,10 @@
   },
   "plugins": ["solid"],
   "rules": {
-    "semi": "error",
+    "semi": 0,
     "solid/reactivity": "warn",
     "solid/no-destructure": "warn",
     "solid/jsx-no-undef": "error",
-    "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-non-null-assertion": 0,
-    "@typescript-eslint/no-unused-vars": 1,
-    "@typescript-eslint/explicit-function-return-type": 1,
-    "@typescript-eslint/strict-boolean-expressions": "warn"
+    "no-unused-vars": "off"
   }
 }
