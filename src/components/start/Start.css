@@ -8,7 +8,7 @@
 }
 
 .main-headline {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 8rem;
 }
 
@@ -31,4 +31,21 @@
 
 .fen-input:focus {
   outline: none;
+}
+
+.game-type-btn {
+  padding: 8px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.game-type-select {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  gap: 4px;
+}
+
+.game-type-select .selected {
+  border: 2px solid blue;
 }

@@ -36,6 +36,7 @@ function Board() {
 
   onMount(async () => {
     const state = location.state as Readonly<Partial<GameInfo>>
+
     setIsAI(state.settings?.isAi ?? false)
     try {
       const position = state?.position ?? (await invoke<string>('get_position'))
