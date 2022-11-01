@@ -2,15 +2,16 @@ import './Tile.css'
 import { Piece as PieceType } from '../../ts/fen/parser'
 import Piece from './Piece'
 
-function allowDrop (ev: any) {
+function allowDrop(ev: any) {
   ev.preventDefault()
 }
-
-function Tile (props: {
+type Color = 'black' | 'white'
+function Tile(props: {
   piece: PieceType | null
   x: number
   y: number
-  color: 'black' | 'white'
+  color: Color
+  displayColor: Color
   onMove: (
     p: PieceType,
     x: number,
@@ -19,6 +20,8 @@ function Tile (props: {
     fromY: number
   ) => void
 }) {
+  const getX = () => (props.displayColor === 'white' ? props.x : 7 - props.x)
+  const getY = () => (props.displayColor === 'black' ? props.y : 7 - props.y)
   const drop = (ev: any) => {
     ev.preventDefault()
     const data = JSON.parse(ev.dataTransfer.getData('text')) as {
@@ -26,17 +29,17 @@ function Tile (props: {
       x: number
       y: number
     }
-    props.onMove(data.piece, props.x, props.y, data.x, data.y)
+    props.onMove(data.piece, getX(), getY(), data.x, data.y)
   }
 
   return (
     <div
-      id={`tile-${props.x}-${props.y}`}
+      id={`tile-${getX()}-${getY()}`}
       onDragOver={allowDrop}
       onDrop={drop}
       class={`tile tile-${props.color}`}
     >
-      <Piece x={props.x} y={props.y} piece={props.piece} />
+      <Piece x={getX()} y={getY()} piece={props.piece} />
     </div>
   )
 }
