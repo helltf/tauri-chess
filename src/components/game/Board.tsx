@@ -10,6 +10,13 @@ import SwapPosition from './SwapPosition'
 
 type Color = 'black' | 'white'
 
+interface GameInfo {
+  position: string | null
+  settings: {
+    isAi: boolean
+  }
+}
+
 function getColor(x: number, y: number): Color {
   let rowStartColor: Color = y % 2 ? 'white' : 'black'
 
@@ -23,13 +30,13 @@ function getColor(x: number, y: number): Color {
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
   const [displayColor, setDisplayColor]: Signal<Color> = createSignal('black')
+  const [isAi, setIsAI] = createSignal(false)
   const location = useLocation()
   const navigate = useNavigate()
 
   onMount(async () => {
-    const state = location.state as Readonly<
-      Partial<{ position: string | null }>
-    >
+    const state = location.state as Readonly<Partial<GameInfo>>
+    setIsAI(state.settings?.isAi ?? false)
     try {
       const position = state?.position ?? (await invoke<string>('get_position'))
       await invoke('set_position', { position })
