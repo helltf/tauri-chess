@@ -2,7 +2,7 @@ import { Show } from 'solid-js'
 import { Piece as PieceType } from '../../ts/fen/parser'
 import './Piece.css'
 
-function Piece (props: { x: number, y: number, piece: PieceType | null }) {
+function Piece(props: { x: number; y: number; piece: PieceType | null }) {
   const drag = (ev: any) => {
     const data = JSON.stringify({ piece: props.piece, x: props.x, y: props.y })
     ev.dataTransfer.setData('text', data)
@@ -16,7 +16,7 @@ function Piece (props: { x: number, y: number, piece: PieceType | null }) {
         onDragStart={drag}
         class="piece"
         src={`pieces/${props.piece?.color}_${props.piece?.type}.svg`}
-       />
+      />
     </Show>
   )
 }

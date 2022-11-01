@@ -1,11 +1,12 @@
 import Tile from './Tile'
 import './Board.css'
-import { createSignal, For, onMount } from 'solid-js'
+import { createSignal, For, onMount, Signal } from 'solid-js'
 import { parse, Piece, Pieces } from '../../ts/fen/parser'
 import { invoke } from '@tauri-apps/api/tauri'
 import Reset from './Reset'
 import Back from './Back'
 import { useLocation, useNavigate } from '@solidjs/router'
+import SwapPosition from './SwapPosition'
 
 type Color = 'black' | 'white'
 
@@ -21,6 +22,7 @@ function getColor(x: number, y: number): Color {
 
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
+  const [displayColor, setDisplayColor]: Signal<Color> = createSignal('black')
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -56,16 +58,26 @@ function Board() {
       return console.error(e)
     }
     const newBoard = JSON.parse(JSON.stringify(board()))
-
     newBoard[y][x] = piece
     newBoard[fromY][fromX] = null
     setBoard(newBoard)
   }
 
+  const getBoard = () =>
+    displayColor() === 'white'
+      ? board()
+      : (JSON.parse(JSON.stringify(board())) as Piece[][])
+          .reverse()
+          .map((r) => r.reverse())
+
+  const onSwap = () => {
+    setDisplayColor(displayColor() === 'white' ? 'black' : 'white')
+  }
+
   return (
     <div class="game">
       <div id="board" class="board">
-        <For each={board()}>
+        <For each={getBoard()}>
           {(row, rowIndex) => (
             <For each={row}>
               {(p, colIndex) => (
@@ -75,6 +87,7 @@ function Board() {
                   y={rowIndex()}
                   color={getColor(colIndex(), rowIndex())}
                   piece={p}
+                  displayColor={displayColor()}
                 />
               )}
             </For>
@@ -84,6 +97,7 @@ function Board() {
       <div class="buttons">
         <Reset onReset={onReset} />
         <Back />
+        <SwapPosition onSwap={onSwap} />
       </div>
     </div>
   )
