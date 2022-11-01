@@ -1,5 +1,4 @@
 import { useNavigate } from '@solidjs/router'
-import './Back.css'
 
 export default function Back() {
   const navigate = useNavigate()
@@ -9,7 +8,7 @@ export default function Back() {
   }
 
   return (
-    <button onClick={onClick} class="back-btn">
+    <button onClick={onClick} class="back-btn side-btn">
       Back
     </button>
   )
