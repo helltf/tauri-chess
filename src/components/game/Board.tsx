@@ -6,6 +6,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import Reset from './Reset'
 import Back from './Back'
 import { useLocation, useNavigate } from '@solidjs/router'
+import SwapPosition from './SwapPosition'
 
 type Color = 'black' | 'white'
 
@@ -69,6 +70,10 @@ function Board() {
           .reverse()
           .map((r) => r.reverse())
 
+  const onSwap = () => {
+    setDisplayColor(displayColor() === 'white' ? 'black' : 'white')
+  }
+
   return (
     <div class="game">
       <div id="board" class="board">
@@ -92,6 +97,7 @@ function Board() {
       <div class="buttons">
         <Reset onReset={onReset} />
         <Back />
+        <SwapPosition onSwap={onSwap} />
       </div>
     </div>
   )
