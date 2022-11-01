@@ -51,7 +51,6 @@ function Board() {
     fromX: number,
     fromY: number
   ) => {
-    console.log(`moving ${fromX}-${fromY} to ${x} ${y}`)
     try {
       await invoke('action', { x, y, fromX, fromY })
     } catch (e) {
@@ -66,10 +65,9 @@ function Board() {
   const getBoard = () =>
     displayColor() === 'white'
       ? board()
-      : board()
-          .splice(0)
+      : (JSON.parse(JSON.stringify(board())) as Piece[][])
           .reverse()
-          .map((r) => r.splice(0).reverse())
+          .map((r) => r.reverse())
 
   return (
     <div class="game">

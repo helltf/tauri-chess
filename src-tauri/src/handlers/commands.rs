@@ -31,8 +31,8 @@ pub fn action(
 ) -> Result<String, String> {
     let mut board = game.0.lock().unwrap();
 
-    let to_square = get_square(x, y);
     let from_square = get_square(from_x, from_y);
+    let to_square = get_square(x, y);
     let action = ChessMove::new(from_square, to_square, None);
     let legal = board.legal(action);
     if legal {
@@ -41,7 +41,7 @@ pub fn action(
         return Ok("Success".to_string());
     }
 
-    return Err("abc".to_string());
+    return Err("invalid move".to_string());
 }
 
 #[tauri::command]

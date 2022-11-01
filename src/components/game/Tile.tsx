@@ -21,7 +21,7 @@ function Tile(props: {
   ) => void
 }) {
   const getX = () => (props.displayColor === 'white' ? props.x : 7 - props.x)
-  const getY = () => (props.displayColor === 'black' ? props.y : 7 - props.y)
+  const getY = () => (props.displayColor === 'white' ? props.y : 7 - props.y)
   const drop = (ev: any) => {
     ev.preventDefault()
     const data = JSON.parse(ev.dataTransfer.getData('text')) as {
