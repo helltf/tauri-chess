@@ -1,24 +1,29 @@
-import {
-  Context,
-  createContext,
-  createSignal,
-  useContext,
-  Signal
-} from 'solid-js'
+import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 type Color = 'white' | 'black'
 
-interface GameContext {
+interface GameInfo {
   playerColor: Color
   isAi: boolean
   position: string
 }
 
-const AiContext = createContext()
+export type ContextType = Array<
+  [
+    GameInfo,
+    {
+      setPlayerColor(color: Color): void
+      setPosition(position: string): void
+      setIsAi(value: boolean): void
+    }
+  ]
+>
+
+const GameContext = createContext()
 
 export function GameContextProvider(props: any) {
-  const [gameContext, setGameContext] = createStore<GameContext>({
+  const [gameContext, setGameContext] = createStore<GameInfo>({
     playerColor: 'white',
     position: '',
     isAi: false
@@ -38,7 +43,9 @@ export function GameContextProvider(props: any) {
       }
     }
   ]
-  return <AiContext.Provider value={game}>{props.children}</AiContext.Provider>
+  return (
+    <GameContext.Provider value={game}>{props.children}</GameContext.Provider>
+  )
 }
 
-export const useGame = () => useContext(AiContext)
+export const useGame = () => useContext(GameContext)

@@ -7,6 +7,7 @@ import Reset from './Reset'
 import Back from './Back'
 import { useLocation, useNavigate } from '@solidjs/router'
 import SwapPosition from './SwapPosition'
+import { ContextType, useGame } from '../../context/gameContext'
 
 type Color = 'black' | 'white'
 
@@ -29,16 +30,13 @@ function getColor(x: number, y: number): Color {
 
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
+  const [gameContext] = useGame() as any
   const [displayColor, setDisplayColor]: Signal<Color> = createSignal('black')
-  const location = useLocation()
   const navigate = useNavigate()
 
   onMount(async () => {
-    const state = location.state as Readonly<Partial<GameInfo>>
-
-    setIsAi(state.settings?.isAi ?? false)
     try {
-      const position = state?.position ?? (await invoke<string>('get_position'))
+      const position = gameContext.position ?? (await invoke<string>('get_position'))
       await invoke('set_position', { position })
       setBoard(parse(position))
     } catch (e: any) {
