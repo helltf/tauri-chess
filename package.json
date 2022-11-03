@@ -23,6 +23,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-solid": "^0.7.4",
+    "prettier": "^2.7.1",
     "typescript": "*",
     "vite": "^3.0.0",
     "vite-plugin-solid": "^2.3.0"
