@@ -1,8 +1,6 @@
 import './Tile.css'
 import { Piece as PieceType } from '../../ts/fen/parser'
 import Piece from './Piece'
-import { useAi } from '../../context/ai'
-import { Signal } from 'solid-js'
 
 type Color = 'black' | 'white'
 
@@ -20,13 +18,11 @@ function Tile(props: {
     fromY: number
   ) => void
 }) {
-  const [isAi] = useAi() as Signal<boolean>
-  const [playerColor] = usePlayerColor() as Signal<Color>
   const getX = () => (props.displayColor === 'white' ? props.x : 7 - props.x)
   const getY = () => (props.displayColor === 'white' ? props.y : 7 - props.y)
 
   const allowDrop = (ev: any) => {
-    if (isAi() && props.color !== props.displayColor) return
+    // if (isAi() && props.color !== props.displayColor) return
     ev.preventDefault()
   }
   const drop = (ev: any) => {

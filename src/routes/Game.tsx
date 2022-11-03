@@ -3,11 +3,7 @@ import { AiProvider } from '../context/ai'
 import './Game.css'
 
 function Game() {
-  return (
-    <AiProvider>
-      <Board />
-    </AiProvider>
-  )
+  return <Board />
 }
 
 export default Game
