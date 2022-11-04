@@ -1,11 +1,11 @@
 import Tile from './Tile'
 import './Board.css'
-import { createSignal, For, onMount, Signal } from 'solid-js'
+import { createSignal, For, onMount } from 'solid-js'
 import { parse, Piece, Pieces } from '../../ts/fen/parser'
 import { invoke } from '@tauri-apps/api/tauri'
 import Reset from './Reset'
 import Back from './Back'
-import { useLocation, useNavigate } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import SwapPosition from './SwapPosition'
 import { Color, useGame } from '../../context/gameContext'
 

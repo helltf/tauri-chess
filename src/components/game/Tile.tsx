@@ -25,7 +25,6 @@ function Tile(props: {
     gameContext.displayColor === 'white' ? props.y : 7 - props.y
 
   const allowDrop = (ev: any) => {
-    // if (isAi() && props.color !== props.displayColor) return
     ev.preventDefault()
   }
   const drop = (ev: any) => {
