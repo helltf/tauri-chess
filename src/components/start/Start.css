@@ -13,7 +13,7 @@
 }
 
 .game-btn {
-  width: 20%;
+  width: 100%;
   background-color: #fff;
   border-radius: 8px;
   padding: 16px;
@@ -23,8 +23,8 @@
 }
 
 .fen-input {
-  margin: 8px;
-  width: 20%;
+  margin: 8px 0px;
+  width: 100%;
   padding: 16px;
   border-radius: 8px;
 }
@@ -42,10 +42,16 @@
 .game-type-select {
   display: flex;
   flex-direction: row;
-  width: 20%;
+  width: 100%;
   gap: 4px;
 }
 
 .game-type-select .selected {
   border: 2px solid blue;
+}
+
+.game-settings {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
 }
