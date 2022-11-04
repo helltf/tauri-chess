@@ -10,9 +10,9 @@ function Piece(props: { x: number; y: number; piece: PieceType | null }) {
     ev.dataTransfer.setData('text', data)
   }
 
-  const isDraggabble = () =>
-    gameContext.isAi && props.piece?.color === gameContext.playerColor
-
+  const isDraggabble = (): boolean => {
+    return !gameContext.isAi || props.piece?.color === gameContext.playerColor
+  }
   return (
     <Show when={props.piece !== null}>
       <img
