@@ -4,14 +4,13 @@ import './Start.css'
 
 function Start() {
   const [gameContext, { setIsAi, setPosition }] = useGame() as any
-
   return (
     <main class="main-view">
       <h1 class="main-headline">Chess</h1>
       <input
         class="fen-input"
         placeholder="Start from position"
-        onInput={(event) => setPosition(event.data)}
+        onInput={(e) => setPosition(e.currentTarget.value)}
       />
       <div class="game-type-select">
         <button

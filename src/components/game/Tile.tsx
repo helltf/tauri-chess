@@ -1,6 +1,7 @@
 import './Tile.css'
 import { Piece as PieceType } from '../../ts/fen/parser'
 import Piece from './Piece'
+import { useGame } from '../../context/gameContext'
 
 type Color = 'black' | 'white'
 
@@ -9,7 +10,6 @@ function Tile(props: {
   x: number
   y: number
   color: Color
-  displayColor: Color
   onMove: (
     p: PieceType,
     x: number,
@@ -18,8 +18,11 @@ function Tile(props: {
     fromY: number
   ) => void
 }) {
-  const getX = () => (props.displayColor === 'white' ? props.x : 7 - props.x)
-  const getY = () => (props.displayColor === 'white' ? props.y : 7 - props.y)
+  const [gameContext] = useGame()!
+  const getX = () =>
+    gameContext.displayColor === 'white' ? props.x : 7 - props.x
+  const getY = () =>
+    gameContext.displayColor === 'white' ? props.y : 7 - props.y
 
   const allowDrop = (ev: any) => {
     // if (isAi() && props.color !== props.displayColor) return
