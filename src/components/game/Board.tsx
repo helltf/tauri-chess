@@ -26,8 +26,11 @@ function Board() {
 
   onMount(async () => {
     try {
+      await invoke('reset')
       const position =
-        gameContext.position ?? (await invoke<string>('get_position'))
+        gameContext.position === ''
+          ? await invoke<string>('get_position')
+          : gameContext.position
       await invoke('set_position', { position })
       setBoard(parse(position))
     } catch (e: any) {
