@@ -2,12 +2,22 @@ import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
 export type Color = 'white' | 'black'
+export enum GameState {
+  MOVE = 'move',
+  CHECKMATE = 'checkmate',
+  RESIGNED = 'resigned',
+  STALEMATE = 'stalemate'
+}
 
 export interface GameInfo {
   playerColor: Color
   isAi: boolean
   position: string
   displayColor: Color
+  status: {
+    state: GameState
+    player: Color
+  }
 }
 
 type GameContextType = [
@@ -17,6 +27,7 @@ type GameContextType = [
     setPosition(position: string): void
     setIsAi(value: boolean): void
     setDisplayColor(color: Color): void
+    setStatus(player: Color, state: GameState): void
   }
 ]
 const GameContext = createContext<GameContextType>()
@@ -26,7 +37,11 @@ export function GameContextProvider(props: any) {
     playerColor: 'white',
     position: '',
     isAi: false,
-    displayColor: 'white'
+    displayColor: 'white',
+    status: {
+      player: 'white',
+      state: GameState.MOVE
+    }
   })
 
   const game = [
@@ -43,6 +58,9 @@ export function GameContextProvider(props: any) {
       },
       setDisplayColor(color: Color) {
         setGameContext('displayColor', color)
+      },
+      setStatus(player: Color, state: GameState) {
+        setGameContext('status', { player, state })
       }
     }
   ] as GameContextType
