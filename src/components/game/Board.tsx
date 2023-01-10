@@ -44,6 +44,8 @@ function Board() {
       position: gameContext.position
     })
     setBoard(parse(gameContext.position))
+    setStatus(await invoke('get_status'))
+    setSideToMove(await invoke('get_player'))
   }
 
   const onMove = async (
