@@ -14,6 +14,7 @@ export interface GameInfo {
   position: string
   displayColor: Color
   state: GameState
+  sideToMove: Color
 }
 
 type GameContextType = [
@@ -24,6 +25,7 @@ type GameContextType = [
     setIsAi(value: boolean): void
     setDisplayColor(color: Color): void
     setStatus(state: GameState): void
+    setSideToMove(color: Color): void
   }
 ]
 const GameContext = createContext<GameContextType>()
@@ -34,7 +36,8 @@ export function GameContextProvider(props: any) {
     position: '',
     isAi: false,
     displayColor: 'white',
-    state: GameState.ONGOING
+    state: GameState.ONGOING,
+    sideToMove: 'white'
   })
 
   const game = [
@@ -54,6 +57,9 @@ export function GameContextProvider(props: any) {
       },
       setStatus(state: GameState) {
         setGameContext('state', state)
+      },
+      setSideToMove(color: Color) {
+        setGameContext('sideToMove', color)
       }
     }
   ] as GameContextType

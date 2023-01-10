@@ -22,7 +22,7 @@ function getColor(x: number, y: number): Color {
 
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
-  const [gameContext, { setStatus }] = useGame()!
+  const [gameContext, { setSideToMove, setStatus }] = useGame()!
   const navigate = useNavigate()
 
   onMount(async () => {
@@ -60,6 +60,7 @@ function Board() {
     }
 
     setStatus(await invoke('get_status'))
+    setSideToMove(await invoke('get_player'))
     const newBoard = JSON.parse(JSON.stringify(board()))
     newBoard[y][x] = piece
     newBoard[fromY][fromX] = null
