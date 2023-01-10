@@ -58,7 +58,8 @@ function Board() {
     } catch (e) {
       return console.error(e)
     }
-    set
+
+    setStatus(await invoke('get_status'))
     const newBoard = JSON.parse(JSON.stringify(board()))
     newBoard[y][x] = piece
     newBoard[fromY][fromX] = null

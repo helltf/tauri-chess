@@ -50,8 +50,12 @@ pub fn reset(game: State<Game>) -> () {
 }
 
 #[tauri::command]
-pub fn get_status(game: State<Game>) -> BoardStatus {
+pub fn get_status(game: State<Game>) -> &str {
     let board = game.0.lock().unwrap();
-    board.status()
+   match board.status() {
+      BoardStatus::Ongoing => "ongoing",
+        BoardStatus::Stalemate => "stalemate",
+        BoardStatus::Checkmate => "checkmate"
+   } 
 }
 
