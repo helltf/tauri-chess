@@ -8,6 +8,7 @@ import Back from './Back'
 import { useNavigate } from '@solidjs/router'
 import SwapPosition from './SwapPosition'
 import { Color, useGame } from '../../context/gameContext'
+import Status from './Status'
 
 function getColor(x: number, y: number): Color {
   let rowStartColor: Color = y % 2 ? 'white' : 'black'
@@ -21,7 +22,7 @@ function getColor(x: number, y: number): Color {
 
 function Board() {
   const [board, setBoard] = createSignal([[]] as Pieces)
-  const [gameContext] = useGame()!
+  const [gameContext, { setPosition, setSideToMove, setStatus }] = useGame()!
   const navigate = useNavigate()
 
   onMount(async () => {
@@ -33,6 +34,9 @@ function Board() {
           : gameContext.position
       await invoke('set_position', { position })
       setBoard(parse(position))
+      setPosition(position)
+      setStatus(await invoke('get_status'))
+      setSideToMove(await invoke('get_player'))
     } catch (e: any) {
       navigate('/')
     }
@@ -43,6 +47,8 @@ function Board() {
       position: gameContext.position
     })
     setBoard(parse(gameContext.position))
+    setStatus(await invoke('get_status'))
+    setSideToMove(await invoke('get_player'))
   }
 
   const onMove = async (
@@ -57,6 +63,9 @@ function Board() {
     } catch (e) {
       return console.error(e)
     }
+
+    setStatus(await invoke('get_status'))
+    setSideToMove(await invoke('get_player'))
     const newBoard = JSON.parse(JSON.stringify(board()))
     newBoard[y][x] = piece
     newBoard[fromY][fromX] = null
@@ -93,6 +102,7 @@ function Board() {
         <Reset onReset={onReset} />
         <Back />
         <SwapPosition />
+        <Status />
       </div>
     </div>
   )

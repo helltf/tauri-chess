@@ -1,0 +1,11 @@
+.color-pane {
+  border: 2px solid gray;
+  width: 24px;
+  height: 24px;
+}
+
+.status-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}

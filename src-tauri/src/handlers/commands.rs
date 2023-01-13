@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use crate::game::game::{get_square, Game};
-use chess::{Board, ChessMove};
+use chess::{Board, ChessMove, BoardStatus, Color};
 use tauri::State;
 
 #[tauri::command]
@@ -47,4 +47,24 @@ pub fn action(
 #[tauri::command]
 pub fn reset(game: State<Game>) -> () {
     *game.0.lock().unwrap() = Board::default()
+}
+
+#[tauri::command]
+pub fn get_status(game: State<Game>) -> &str {
+    let board = game.0.lock().unwrap();
+   match board.status() {
+      BoardStatus::Ongoing => "ongoing",
+        BoardStatus::Stalemate => "stalemate",
+        BoardStatus::Checkmate => "checkmate"
+   } 
+}
+
+#[tauri::command]
+pub fn get_player(game: State<Game>) -> &str{
+    let board = game.0.lock().unwrap();
+
+    match board.side_to_move(){
+        Color::White => "white",
+        Color::Black => "black"
+    }
 }
