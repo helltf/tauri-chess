@@ -3,7 +3,7 @@ import { useGame } from '../../context/gameContext'
 import './Start.css'
 
 function Start() {
-  const [gameContext, { setIsAi, setPosition }] = useGame()!
+  const [gameContext, { setIsAi, setPosition, setPlayerColor }] = useGame()!
 
   return (
     <main class="main-view">
@@ -28,6 +28,20 @@ function Start() {
           >
             AI
           </button>
+        </div>
+        <div class="color-btns">
+          <button
+            class={`game-color-btn ${
+              gameContext.playerColor === 'white' ? 'selected' : ''
+            }`}
+            onClick={(_) => setPlayerColor('white')}
+          />
+          <button
+            class={`game-color-btn black ${
+              gameContext.playerColor === 'white' ? '' : 'selected'
+            }`}
+            onClick={(_) => setPlayerColor('black')}
+          />
         </div>
         <A href="/game" class="game-btn">
           Start a Game
