@@ -1,9 +1,17 @@
 import { A } from '@solidjs/router'
-import { useGame } from '../../context/gameContext'
+import { Color, useGame } from '../../context/gameContext'
 import './Start.css'
 
 function Start() {
-  const [gameContext, { setIsAi, setPosition }] = useGame()!
+  const [
+    gameContext,
+    { setIsAi, setPosition, setPlayerColor, setDisplayColor }
+  ] = useGame()!
+
+  const setColors = (color: Color) => {
+    setPlayerColor(color)
+    setDisplayColor(color)
+  }
 
   return (
     <main class="main-view">
@@ -28,6 +36,20 @@ function Start() {
           >
             AI
           </button>
+        </div>
+        <div class="color-btns">
+          <button
+            class={`game-color-btn ${
+              gameContext.playerColor === 'white' ? 'selected' : ''
+            }`}
+            onClick={(_) => setColors('white')}
+          />
+          <button
+            class={`game-color-btn black ${
+              gameContext.playerColor === 'white' ? '' : 'selected'
+            }`}
+            onClick={(_) => setColors('black')}
+          />
         </div>
         <A href="/game" class="game-btn">
           Start a Game
