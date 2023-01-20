@@ -23,7 +23,6 @@
 }
 
 .fen-input {
-  margin: 8px 0px;
   width: 100%;
   padding: 16px;
   border-radius: 8px;
@@ -46,12 +45,31 @@
   gap: 4px;
 }
 
-.game-type-select .selected {
-  border: 2px solid blue;
-}
-
 .game-settings {
   width: 30%;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.color-btns {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  gap: 8px;
+}
+
+.game-color-btn {
+  border: none;
+  height: 48px;
+  width: 48px;
+}
+
+.black {
+  background: black;
+}
+
+.selected {
+  border: 2px solid blue;
 }
